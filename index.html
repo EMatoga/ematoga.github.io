@@ -1,270 +1,692 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        :root {
+            --bg-primary: #faf9f6;
+            --bg-secondary: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --accent: #8b0000;
+            --accent-light: #c41e3a;
+            --border: #e0e0e0;
+            --shadow: rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
 
-<title>Academic Portfolio</title>
+        [data-theme="dark"] {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #b0b0b0;
+            --accent: #c41e3a;
+            --accent-light: #ff6b6b;
+            --border: #333333;
+            --shadow: rgba(0,0,0,0.3);
+        }
 
-<link rel="icon" href="favicon.ico">
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
 
-<link rel="stylesheet" href="css/styles.css">
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
 
+        /* Navigation */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 50px;
+            height: 26px;
+            background: var(--border);
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle::after {
+            content: '☀️';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            background: var(--accent);
+        }
+
+        [data-theme="dark"] .theme-toggle::after {
+            content: '🌙';
+            left: 26px;
+            background: #1a1a1a;
+        }
+
+        /* Header / Profile */
+        .header {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: start;
+        }
+
+        .photo-container {
+            position: relative;
+        }
+
+        .photo {
+            width: 200px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 3px solid var(--accent);
+            box-shadow: 0 4px 20px var(--shadow);
+            filter: grayscale(20%);
+            transition: var(--transition);
+        }
+
+        .photo:hover {
+            filter: grayscale(0%);
+            transform: translateY(-2px);
+        }
+
+        .photo-placeholder {
+            width: 200px;
+            height: 250px;
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .photo-placeholder::before {
+            content: '👤';
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.5;
+        }
+
+        .header-info h1 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .header-info .subtitle {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            margin-left: 1rem;
+        }
+
+        /* About */
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        /* Publications */
+        .publication {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 4px 4px 0;
+            transition: var(--transition);
+        }
+
+        .publication:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .pub-title {
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .pub-authors {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .pub-journal {
+            font-style: italic;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        /* Education & Experience */
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border);
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.3rem 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .skill-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .photo-container {
+                display: flex;
+                justify-content: center;
+            }
+
+            .contact-info {
+                justify-content: center;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .nav-controls, .theme-toggle {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+        }
+
+        /* Language content visibility */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-
-
-
 <body>
-
-<div class="container">
-
-
-<header>
-
-<img 
-src="images/profile/profile.jpg"
-class="profile"
-alt="profile photo">
-
-
-<div>
-
-<h1
-data-pl="Imię Nazwisko"
-data-en="Name Surname">
-</h1>
-
-
-<div class="subtitle"
-
-data-pl="Stanowisko naukowe / afiliacja"
-data-en="Academic position / affiliation">
-
-</div>
-
-
-<div class="controls">
-
-<button onclick="toggleLang()">
-
-PL / EN
-
-</button>
-
-
-<button onclick="toggleTheme()">
-
-☀ / ☾
-
-</button>
-
-
-</div>
-
-
-</div>
-
-</header>
-
-
-
-<section>
-
-<h2
-data-pl="O mnie"
-data-en="About">
-
-</h2>
-
-
-<p
-data-pl="Krótki opis zainteresowań naukowych, metod i projektów badawczych."
-data-en="Short description of research interests, methods and academic background.">
-
-</p>
-
-</section>
-
-
-
-<section>
-
-<h2
-data-pl="Zainteresowania badawcze"
-data-en="Research interests">
-
-</h2>
-
-
-<ul>
-
-<li
-data-pl="obszar badawczy"
-data-en="research area">
-</li>
-
-
-<li
-data-pl="obszar badawczy"
-data-en="research area">
-</li>
-
-
-<li
-data-pl="obszar badawczy"
-data-en="research area">
-</li>
-
-</ul>
-
-
-</section>
-
-
-
-<section>
-
-<h2
-data-pl="Publikacje"
-data-en="Publications">
-
-</h2>
-
-
-
-<div class="pub">
-
-<img src="images/publications/paper1.jpg">
-
-
-<div>
-
-<p>
-
-Autor, A. (2024)
-
-</p>
-
-
-<p
-data-pl="Tytuł publikacji"
-data-en="Publication title">
-
-</p>
-
-
-</div>
-
-</div>
-
-
-
-</section>
-
-
-
-<section>
-
-<h2
-data-pl="Projekty"
-data-en="Projects">
-
-</h2>
-
-
-
-<div class="project">
-
-<img src="images/projects/project1.jpg">
-
-
-<div>
-
-<p
-data-pl="Opis projektu"
-data-en="Project description">
-
-</p>
-
-
-</div>
-
-</div>
-
-
-</section>
-
-
-
-<section>
-
-<h2
-data-pl="CV"
-data-en="CV">
-
-</h2>
-
-
-<a href="files/cv.pdf" target="_blank">
-
-PDF
-
-</a>
-
-
-</section>
-
-
-
-<section>
-
-<h2
-data-pl="Kontakt"
-data-en="Contact">
-
-</h2>
-
-
-<p>
-
-email@email.com
-
-</p>
-
-
-<p>
-
-<a href="#">ORCID</a>
-
-|
-
-<a href="#">Google Scholar</a>
-
-|
-
-<a href="#">GitHub</a>
-
-</p>
-
-
-</section>
-
-
-
-<footer>
-
-© <span id="year"></span>
-
-</footer>
-
-
-</div>
-
-
-<script src="js/script.js"></script>
-
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="logo" style="font-weight: bold; color: var(--accent); font-size: 1.2rem;">
+                <span id="logo-text">Dr. Academic Portfolio</span>
+            </div>
+            <div class="nav-controls">
+                <button class="btn active" onclick="setLanguage('pl')" id="btn-pl">PL</button>
+                <button class="btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+                <div class="theme-toggle" onclick="toggleTheme()" title="Przełącz tryb jasny/ciemny"></div>
+            </div>
+        </nav>
+
+        <!-- Header / Profile Section -->
+        <header class="header">
+            <div class="photo-container">
+                <!-- Zamień poniżej na własne zdjęcie -->
+                <div class="photo-placeholder" id="photo-placeholder">
+                    Miejsce na<br>zdjęcie<br>(200x250px)
+                </div>
+                <!-- <img src="photo.jpg" alt="Profile" class="photo"> -->
+            </div>
+            
+            <div class="header-info">
+                <!-- Polish Version -->
+                <div class="lang-content active" data-lang="pl">
+                    <h1>dr inż. Anna Kowalska</h1>
+                    <div class="subtitle">Adiunkt w Zakładzie Informatyki</div>
+                    <div class="contact-info">
+                        <span>📧 anna.kowalska@uniwersytet.edu.pl</span>
+                        <span>📍 Wydział Matematyki i Informatyki</span>
+                        <span>🔗 ORCID: 0000-0000-0000-0000</span>
+                        <span>📚 Google Scholar</span>
+                    </div>
+                </div>
+
+                <!-- English Version -->
+                <div class="lang-content" data-lang="en">
+                    <h1>Dr. Anna Kowalska</h1>
+                    <div class="subtitle">Assistant Professor in Computer Science</div>
+                    <div class="contact-info">
+                        <span>📧 anna.kowalska@university.edu</span>
+                        <span>📍 Faculty of Mathematics and Computer Science</span>
+                        <span>🔗 ORCID: 0000-0000-0000-0000</span>
+                        <span>📚 Google Scholar</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- About Section -->
+            <section id="about">
+                <h2 data-pl="O mnie" data-en="About">O mnie</h2>
+                
+                <div class="lang-content active" data-lang="pl">
+                    <p class="about-text">
+                        Jestem adiunktem na Wydziale Matematyki i Informatyki Uniwersytetu X. Moje zainteresowania badawcze koncentrują się wokół sztucznej inteligencji, uczenia maszynowego oraz przetwarzania języka naturalnego. 
+                        Prowadzę zajęcia z zakresu algorytmów, struktur danych oraz uczenia głębokiego. Aktywnie współpracuję z międzynarodowymi zespołami badawczymi, a moje prace zostały opublikowane w renomowanych czasopismach naukowych.
+                    </p>
+                </div>
+
+                <div class="lang-content" data-lang="en">
+                    <p class="about-text">
+                        I am an Assistant Professor at the Faculty of Mathematics and Computer Science at University X. My research interests focus on artificial intelligence, machine learning, and natural language processing.
+                        I teach courses on algorithms, data structures, and deep learning. I actively collaborate with international research teams, and my work has been published in renowned scientific journals.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section id="education">
+                <h2 data-pl="Wykształcenie" data-en="Education">Wykształcenie</h2>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2018-2022</div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="pl">
+                            <h3>Doktorat z Informatyki</h3>
+                            <p>Uniwersytet X, Wydział Matematyki i Informatyki<br>
+                            Rozprawa: "Zaawansowane metody przetwarzania języka naturalnego w kontekście języków słowiańskich"</p>
+                        </div>
+                        <div class="lang-content" data-lang="en">
+                            <h3>Ph.D. in Computer Science</h3>
+                            <p>University X, Faculty of Mathematics and Computer Science<br>
+                            Thesis: "Advanced Natural Language Processing Methods in the Context of Slavic Languages"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2016-2018</div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="pl">
+                            <h3>Magister Inżynier Informatyki</h3>
+                            <p>Politechnika Y, Wydział Informatyki i Telekomunikacji</p>
+                        </div>
+                        <div class="lang-content" data-lang="en">
+                            <h3>M.Sc. in Computer Science</h3>
+                            <p>Technical University Y, Faculty of Computer Science and Telecommunications</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Publications Section -->
+            <section id="publications">
+                <h2 data-pl="Publikacje" data-en="Publications">Publikacje</h2>
+                
+                <div class="lang-content active" data-lang="pl">
+                    <div class="publication">
+                        <div class="pub-title">Deep Learning Approaches to Morphologically Rich Languages: A Comprehensive Study</div>
+                        <div class="pub-authors">Kowalska A., Nowak J., Smith R.</div>
+                        <div class="pub-journal">Computational Linguistics, 2024, vol. 50(2), pp. 234-267</div>
+                    </div>
+                    
+                    <div class="publication">
+                        <div class="pub-title">Transformer-based Models for Low-Resource Language Processing</div>
+                        <div class="pub-authors">Kowalska A., Wiśniewski M.</div>
+                        <div class="pub-journal">IEEE Transactions on Pattern Analysis and Machine Intelligence, 2023, vol. 45(8), pp. 10234-10248</div>
+                    </div>
+                    
+                    <div class="publication">
+                        <div class="pub-title">Semantic Analysis of Polish Legal Texts Using BERT</div>
+                        <div class="pub-authors">Kowalska A., et al.</div>
+                        <div class="pub-journal">Artificial Intelligence and Law, 2023, vol. 31, pp. 145-178</div>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="en">
+                    <div class="publication">
+                        <div class="pub-title">Deep Learning Approaches to Morphologically Rich Languages: A Comprehensive Study</div>
+                        <div class="pub-authors">Kowalska A., Nowak J., Smith R.</div>
+                        <div class="pub-journal">Computational Linguistics, 2024, vol. 50(2), pp. 234-267</div>
+                    </div>
+                    
+                    <div class="publication">
+                        <div class="pub-title">Transformer-based Models for Low-Resource Language Processing</div>
+                        <div class="pub-authors">Kowalska A., Wiśniewski M.</div>
+                        <div class="pub-journal">IEEE Transactions on Pattern Analysis and Machine Intelligence, 2023, vol. 45(8), pp. 10234-10248</div>
+                    </div>
+                    
+                    <div class="publication">
+                        <div class="pub-title">Semantic Analysis of Polish Legal Texts Using BERT</div>
+                        <div class="pub-authors">Kowalska A., et al.</div>
+                        <div class="pub-journal">Artificial Intelligence and Law, 2023, vol. 31, pp. 145-178</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Research Interests / Skills -->
+            <section id="skills">
+                <h2 data-pl="Zainteresowania badawcze" data-en="Research Interests">Zainteresowania badawcze</h2>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="lang-content active" data-lang="pl"><h3>Główne obszary</h3></div>
+                        <div class="lang-content" data-lang="en"><h3>Main Areas</h3></div>
+                        <ul class="skill-list">
+                            <li>Natural Language Processing</li>
+                            <li>Deep Learning</li>
+                            <li>Computational Linguistics</li>
+                            <li>Machine Learning</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="lang-content active" data-lang="pl"><h3>Specjalizacje</h3></div>
+                        <div class="lang-content" data-lang="en"><h3>Specializations</h3></div>
+                        <ul class="skill-list">
+                            <li>Transformer Models</li>
+                            <li>Low-resource Languages</li>
+                            <li>Legal Text Analysis</li>
+                            <li>Semantic Parsing</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="lang-content active" data-lang="pl"><h3>Narzędzia</h3></div>
+                        <div class="lang-content" data-lang="en"><h3>Tools</h3></div>
+                        <ul class="skill-list">
+                            <li>Python, PyTorch, TensorFlow</li>
+                            <li>Hugging Face Transformers</li>
+                            <li>spaCy, NLTK</li>
+                            <li>LaTeX, Git</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Teaching -->
+            <section id="teaching">
+                <h2 data-pl="Dydaktyka" data-en="Teaching">Dydaktyka</h2>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2023/24</div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="pl">
+                            <h3>Uczenie Głębokie i Przetwarzanie Języka Naturalnego</h3>
+                            <p>Przedmiot magisterski, 30h wykład + 30h laboratorium</p>
+                        </div>
+                        <div class="lang-content" data-lang="en">
+                            <h3>Deep Learning and Natural Language Processing</h3>
+                            <p>Graduate course, 30h lecture + 30h lab</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2023/24</div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="pl">
+                            <h3>Algorytmy i Struktury Danych</h3>
+                            <p>Przedmiot inżynierski, 45h wykład + 30h laboratorium</p>
+                        </div>
+                        <div class="lang-content" data-lang="en">
+                            <h3>Algorithms and Data Structures</h3>
+                            <p>Undergraduate course, 45h lecture + 30h lab</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="lang-content active" data-lang="pl">
+                &copy; 2024 Anna Kowalska | Ostatnia aktualizacja: marzec 2024
+            </div>
+            <div class="lang-content" data-lang="en">
+                &copy; 2024 Anna Kowalska | Last updated: March 2024
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Language Switch
+        function setLanguage(lang) {
+            // Update buttons
+            document.querySelectorAll('.nav-controls .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`btn-${lang}`).classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.lang-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+                el.classList.add('active');
+            });
+
+            // Update section headers
+            document.querySelectorAll('h2[data-pl]').forEach(h2 => {
+                h2.textContent = h2.getAttribute(`data-${lang}`);
+            });
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+
+            localStorage.setItem('language', lang);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+
+            // Load saved language
+            const savedLang = localStorage.getItem('language');
+            if (savedLang && savedLang !== 'pl') {
+                setLanguage(savedLang);
+            }
+        });
+    </script>
 </body>
-
 </html>
