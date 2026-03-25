@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="logo">
+                <span id="logo-text">Dr. Academic Portfolio</span>
+            </div>
+            <div class="nav-controls">
+                <button class="btn active" onclick="setLanguage('pl')" id="btn-pl">PL</button>
+                <button class="btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+                <div class="theme-toggle" onclick="toggleTheme()" title="Przełącz tryb jasny/ciemny"></div>
+            </div>
+        </nav>
+
+        <!-- Header / Profile Section -->
+        <header class="header">
+            <div class="photo-container">
+                <!-- MIEJSCE NA ZDJĘCIE PROFILOWE -->
+                <!-- Opcja 1: Własne zdjęcie (zalecane) -->
+                <!-- <img src="images/profile.jpg" alt="Zdjęcie profilowe" class="photo" id="profile-photo"> -->
+                
+                <!-- Opcja 2: Placeholder (domyślnie) -->
+                <div class="photo-placeholder" id="profile-placeholder">
+                    <div class="placeholder-icon">👤</div>
+                    <div class="placeholder-text">
+                        <span data-pl="Dodaj zdjęcie<br>200 x 250 px<br>do folderu images/" 
+                              data-en="Add photo<br>200 x 250 px<br>to images/ folder">
+                            Dodaj zdjęcie<br>200 x 250 px<br>do folderu images/
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-info">
+                <!-- Polish Version -->
+                <div class="lang-content active" data-lang="pl">
+                    <h1>dr inż. Anna Kowalska</h1>
+                    <div class="subtitle">Adiunkt w Zakładzie Informatyki</div>
+                    <div class="contact-info">
+                        <span>📧 anna.kowalska@uniwersytet.edu.pl</span>
+                        <span>📍 Wydział Matematyki i Informatyki</span>
+                        <span>🔗 ORCID: 0000-0000-0000-0000</span>
+                        <span>📚 Google Scholar</span>
+                    </div>
+                </div>
+
+                <!-- English Version -->
+                <div class="lang-content" data-lang="en">
+                    <h1>Dr. Anna Kowalska</h1>
+                    <div class="subtitle">Assistant Professor in Computer Science</div>
+                    <div class="contact-info">
+                        <span>📧 anna.kowalska@university.edu</span>
+                        <span>📍 Faculty of Mathematics and Computer Science</span>
+                        <span>🔗 ORCID: 0000-0000-0000-0000</span>
+                        <span>📚 Google Scholar</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- About Section -->
+            <section id="about">
+                <h2 data-pl="O mnie" data-en="About">O mnie</h2>
+                
+                <div class="lang-content active" data-lang="pl">
+                    <p class="about-text">
+                        Jestem adiunktem na Wydziale Matematyki i Informatyki Uniwersytetu X. Moje zainteresowania badawcze koncentrują się wokół sztucznej inteligencji, uczenia maszynowego oraz przetwarzania języka naturalnego. 
+                        Prowadzę zajęcia z zakresu algorytmów, struktur danych oraz uczenia głębokiego.
+                    </p>
+                </div>
+
+                <div class="lang-content" data-lang="en">
+                    <p class="about-text">
+                        I am an Assistant Professor at the Faculty of Mathematics and Computer Science at University X. My research interests focus on artificial intelligence, machine learning, and natural language processing.
+                        I teach courses on algorithms, data structures, and deep learning.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Gallery Section (opcjonalnie) -->
+            <section id="gallery" class="gallery-section">
+                <h2 data-pl="Galeria" data-en="Gallery">Galeria</h2>
+                
+                <!-- MIEJSCE NA GALERIĘ ZDJĘĆ -->
+                <div class="image-gallery" id="image-gallery">
+                    <!-- Dodawaj zdjęcia tutaj według wzoru: -->
+                    
+                    <!-- <div class="gallery-item">
+                        <img src="images/gallery/konferencja-2024.jpg" alt="Konferencja 2024" loading="lazy">
+                        <div class="gallery-caption" data-pl="Konferencja ACL 2024" data-en="ACL Conference 2024">Konferencja ACL 2024</div>
+                    </div> -->
+                    
+                    <!-- <div class="gallery-item">
+                        <img src="images/gallery/laboratorium.jpg" alt="Laboratorium" loading="lazy">
+                        <div class="gallery-caption" data-pl="Laboratorium NLP" data-en="NLP Laboratory">Laboratorium NLP</div>
+                    </div> -->
+                    
+                    <!-- Domyślnie puste - dodaj zdjęcia gdy będziesz gotowa -->
+                    <div class="gallery-empty" data-pl="Brak zdjęć w galerii. Dodaj obrazki do folderu images/gallery/" 
+                                               data-en="No images in gallery. Add images to images/gallery/ folder">
+                        Brak zdjęć w galerii. Dodaj obrazki do folderu images/gallery/
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section id="education">
+                <h2 data-pl="Wykształcenie" data-en="Education">Wykształcenie</h2>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2018-2022</div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="pl">
+                            <h3>Doktorat z Informatyki</h3>
+                            <p>Uniwersytet X, Wydział Matematyki i Informatyki</p>
+                        </div>
+                        <div class="lang-content" data-lang="en">
+                            <h3>Ph.D. in Computer Science</h3>
+                            <p>University X, Faculty of Mathematics and Computer Science</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2016-2018</div>
+                    <div class="timeline-content">
+                        <div class="lang-content active" data-lang="pl">
+                            <h3>Magister Inżynier Informatyki</h3>
+                            <p>Politechnika Y, Wydział Informatyki i Telekomunikacji</p>
+                        </div>
+                        <div class="lang-content" data-lang="en">
+                            <h3>M.Sc. in Computer Science</h3>
+                            <p>Technical University Y, Faculty of Computer Science and Telecommunications</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Publications Section -->
+            <section id="publications">
+                <h2 data-pl="Publikacje" data-en="Publications">Publikacje</h2>
+                
+                <div class="lang-content active" data-lang="pl">
+                    <div class="publication">
+                        <div class="pub-title">Deep Learning Approaches to Morphologically Rich Languages</div>
+                        <div class="pub-authors">Kowalska A., Nowak J., Smith R.</div>
+                        <div class="pub-journal">Computational Linguistics, 2024</div>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="en">
+                    <div class="publication">
+                        <div class="pub-title">Deep Learning Approaches to Morphologically Rich Languages</div>
+                        <div class="pub-authors">Kowalska A., Nowak J., Smith R.</div>
+                        <div class="pub-journal">Computational Linguistics, 2024</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Research Interests -->
+            <section id="skills">
+                <h2 data-pl="Zainteresowania badawcze" data-en="Research Interests">Zainteresowania badawcze</h2>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="lang-content active" data-lang="pl"><h3>Główne obszary</h3></div>
+                        <div class="lang-content" data-lang="en"><h3>Main Areas</h3></div>
+                        <ul class="skill-list">
+                            <li>Natural Language Processing</li>
+                            <li>Deep Learning</li>
+                            <li>Machine Learning</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="lang-content active" data-lang="pl"><h3>Narzędzia</h3></div>
+                        <div class="lang-content" data-lang="en"><h3>Tools</h3></div>
+                        <ul class="skill-list">
+                            <li>Python, PyTorch, TensorFlow</li>
+                            <li>Hugging Face Transformers</li>
+                            <li>LaTeX, Git</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="lang-content active" data-lang="pl">
+                &copy; 2024 Anna Kowalska | Ostatnia aktualizacja: marzec 2024
+            </div>
+            <div class="lang-content" data-lang="en">
+                &copy; 2024 Anna Kowalska | Last updated: March 2024
+            </div>
+        </footer>
+    </div>
+
+    <!-- Lightbox dla obrazków (opcjonalnie) -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Powiększone zdjęcie">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
